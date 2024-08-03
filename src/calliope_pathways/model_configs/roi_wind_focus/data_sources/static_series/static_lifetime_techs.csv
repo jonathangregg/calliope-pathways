@@ -1,0 +1,11 @@
+techs,parameters,values
+oil,lifetime,25
+coal,lifetime,25
+ccgt,lifetime,25
+waste,lifetime,25
+bioenergy,lifetime,25
+nuclear,lifetime,40
+hydropower,lifetime,55
+tidal,lifetime,1
+battery_li,lifetime,10
+battery_phs,lifetime,55

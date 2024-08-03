@@ -1,0 +1,268 @@
+##
+# TECHNOLOGY DEFINITIONS
+##
+
+## References
+# DANISH ENERGY AGENCY https://ens.dk/sites/ens.dk/files/Analyser/version_14_-_technology_data_catalogue_for_el_and_dh.pdf
+# INTERNATIONAL ENERGY AGENCY ENERGY EFFICIENCY INDICATORS https://iea.blob.core.windows.net/assets/acaecb98-4430-4395-a4fa-d1a4d5ccb3d3/EnergyEfficiencyIndicatorsforPublicElectricityProductionfromFossilFuels.pdf
+# SEIA ENERGY RELATED CO2 EMISSIONS IN IRELAND 2005-2018 https://www.seai.ie/publications/Energy-Emissions-Report-2020.pdf
+
+
+# TODO: Is decomission incuded in cost_flow_cap
+
+tech_groups:
+  cost_dim_setter:
+    cost_flow_cap: # Cost of plant per unit (in this case 2015€/kW & tCO2/kW of plant capacity)
+      data: null
+      index: [monetary,emissions]
+      dims: costs
+    cost_om_annual: # Operations and Maintenance costs per unit per annum (2015€/kW/year & tCO2 negligible)
+      data: null
+      index: monetary
+      dims: costs
+    cost_flow_in: # Cost of flow_in (ie. consumed resource such as gas or oil) (2015€/kW & tCO2 negligible)
+      data: null
+      index: monetary
+      dims: costs
+    cost_flow_out: # Cost return of flow_out (ie. price of energy to purchase and produced emissions) (2015€/kWh & tCO2/kWh)
+      data: null
+      index: [monetary,emissions]
+      dims: costs
+    cost_storage_cap:
+      data: null
+      index: [monetary,emissions]
+      dims: costs
+    cost_area_use:
+      data: null
+      index: monetary
+      dims: costs
+    cost_source_cap:
+      data: null
+      index: monetary
+      dims: costs
+    cost_interest_rate:
+      data: 0.10 #FIND SOURCE BUT LEAVE FOR NOW
+      index: monetary
+      dims: costs
+
+  inter_zonal_transmission:
+    name: "Transmission intra-zonal electricity"
+    color: '#966F9E'
+    carrier_in: electricity
+    carrier_out: electricity
+    base_tech: transmission
+    lifetime: 40
+    flow_out_eff: 0.96
+
+    cost_interest_rate:
+      data: 0.10
+      index: monetary
+      dims: costs
+    cost_flow_out:
+      data: 0.0011  # EUR2010/kWh, from Lombardi
+      index: monetary
+      dims: costs
+    cost_flow_cap:
+      data: 450   # EUR2010/kW, from Lombardi
+      index: monetary
+      dims: costs
+
+techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
+  ##
+  # Supply data, various sources speciifed in comments and report
+  ##
+
+  oil: #CURRENTLY ONLY DISTILLATE OIL AS ONLY HEAVY FUEL OIL PLANT PLANED TO CONVERT SOON HOWEVER CAN ADD THIS
+    # Initial Info
+    name: 'Oil and Other Fossil Fuels Plant'
+    color: '#000000'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
+    
+  coal:
+    # Initial Info
+    name: 'Coal Plant'
+    color: '#5A5A5A'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
+
+  ccgt:
+    # Initial Info
+    name: 'Combined cycle gas turbine'
+    color: '#A5A5A5'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    flow_ramping: 0.8 # Assumed
+
+  ##
+  # Semi-Renewable Techs
+  ##
+
+  waste:
+    # Initial Info
+    name: "Waste to energy plant"
+    color: '#6A0241'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+
+  bioenergy:
+    # Initial Info
+    name: "Biogas, biofuel and biomass electricity generation"
+    color: '#5AA24D'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+
+  nuclear:
+    # Initial Info
+    name: "Nuclear Fission"
+    color: '#39ff14'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+
+  ##
+  # Renewable Techs
+  ##
+  
+  onshore_wind:
+    # Initial Info
+    name: 'Onshore Wind'
+    color: '#A3E8A9'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    source_unit: per_cap
+
+  offshore_wind:
+    # Initial Info
+    name: 'Offshore Wind'
+    color: '#47D154'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    source_unit: per_cap
+
+  pv:
+    # Initial Info
+    name: 'Photovoltaic electricity'
+    color: '#DDCC77'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    source_unit: per_cap
+
+  hydropower: # merged reservoir+basin and RoR
+    # Initial Info
+    name: 'Hydropower'
+    color: '#64D7CE'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    source_unit: per_cap
+    include_storage: true  # TODO: unclear how to make this work
+
+  tidal: # tidal reservoir
+    # Initial Info
+    name: 'Tidal'
+    color: '#006994'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    source_unit: per_cap
+    efficiency: 0
+    #include_storage: true  # TODO: unclear how to make this work
+
+  ##
+  # Battery Techs
+  ##
+
+  battery_li:
+    name: "Li-ion battery storage"
+    color: '#882255'
+    base_tech: storage
+    inherit: cost_dim_setter
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_cap_max: # kW
+    storage_cap_max: 2e8
+    flow_cap_per_storage_cap_max: 0.25
+    flow_cap_initial: 0
+
+  battery_phs:
+    name: "Pump-hydro storage"
+    color: "#332288"
+    base_tech: storage
+    inherit: cost_dim_setter
+    carrier_in: electricity
+    carrier_out: electricity
+    flow_cap_max: # kW
+
+  ##
+  # Demand, imports, exports
+  ##
+
+  demand_electricity:
+    name: "Electricity demand"
+    color: "#072486"
+    base_tech: demand
+    carrier_in: electricity
+
+  import_electricity:
+    name: "Electricity imports"
+    color: '#E68A31'
+    base_tech: supply
+    carrier_out: electricity
+
+  export_electricity:
+    name: "Electricity exports"
+    color: '#E68A31'
+    base_tech: demand
+    carrier_in: electricity
+
+
+  ##
+  # Transmission
+  ##
+
+  ac_CON_to_MUN:
+    inherit: inter_zonal_transmission
+    from: CON
+    to: MUN
+
+  ac_CON_to_ULS:
+    inherit: inter_zonal_transmission
+    from: CON
+    to: ULS
+
+  ac_LEI_to_CON:
+    inherit: inter_zonal_transmission
+    from: LEI
+    to: CON
+
+  ac_LEI_to_ULS:
+    inherit: inter_zonal_transmission
+    from: LEI
+    to: ULS
+
+  ac_LEI_to_MUN:
+    inherit: inter_zonal_transmission
+    from: LEI
+    to: MUN
+
+  ac_MUN_to_EUC:
+    inherit: inter_zonal_transmission
+    from: MUN
+    to: EUC
+
+  ac_ULS_to_UKC:
+    inherit: inter_zonal_transmission
+    from: ULS
+    to: UKC
+

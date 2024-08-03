@@ -1,0 +1,7 @@
+techs,parameters,values
+nuclear,flow_out_eff,0.262
+hydropower,source_eff,0.61
+battery_li,flow_in_eff,0.93
+battery_li,flow_out_eff,0.92
+battery_phs,flow_in_eff,0.8
+battery_phs,flow_out_eff,0.7625

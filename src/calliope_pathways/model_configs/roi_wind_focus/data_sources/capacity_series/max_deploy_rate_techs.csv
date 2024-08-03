@@ -1,0 +1,12 @@
+nodes,techs,parameters,values
+CON,hydropower,flow_cap_max,2460
+LEI,waste,flow_cap_max,78000
+LEI,hydropower,flow_cap_max,46945
+LEI,battery_phs,flow_cap_max,292000
+LEI,battery_phs,storage_cap_max,1421400
+MUN,hydropower,flow_cap_max,124065
+ULS,hydropower,flow_cap_max,80454
+CON,onshore_wind,flow_cap_max,993400
+LEI,onshore_wind,flow_cap_max,467250
+MUN,onshore_wind,flow_cap_max,1748840
+ULS,onshore_wind,flow_cap_max,489760

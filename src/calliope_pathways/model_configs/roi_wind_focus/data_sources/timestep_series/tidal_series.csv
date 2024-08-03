@@ -1,0 +1,6 @@
+reference,,,,
+comment,,,,
+nodes,CON,LEI,MUN,ULS
+techs,tidal,tidal,tidal,tidal
+parameters,source_use_equals,source_use_equals,source_use_equals,source_use_equals
+timesteps,,,,

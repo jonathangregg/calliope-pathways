@@ -1,0 +1,8 @@
+techs,parameters,values
+ac_CON_to_MUN,flow_cap_initial,0
+ac_CON_to_ULS,flow_cap_initial,0
+ac_LEI_to_CON,flow_cap_initial,0
+ac_LEI_to_ULS,flow_cap_initial,0
+ac_LEI_to_MUN,flow_cap_initial,0
+ac_MUN_to_EUC,flow_cap_initial,0
+ac_ULS_to_UKC,flow_cap_initial,0
