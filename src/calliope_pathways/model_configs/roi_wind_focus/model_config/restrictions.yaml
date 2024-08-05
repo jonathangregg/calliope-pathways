@@ -1,0 +1,35 @@
+constraints:
+  emissions_targets:
+    description: Limit emissions produced per timestep by a % of initial timestep
+    foreach: [investsteps]
+    where: emissions_max AND emissions_initial
+    equations:
+        - expression: >-  
+            sum(cost[costs=emissions], over=[nodes, techs]) 
+            <= emissions_max * emissions_initial
+          
+  limit_imports:
+    description: Limit imports to a percentage of total flow in each timestep
+    foreach: [nodes,techs,timesteps,investsteps]
+    where: import_max
+    equations:
+        - expression: >-  
+            sum(flow_out*import_max,over=[techs,carriers]) 
+            >= sum(flow_out[techs=$import_tech],over=[carriers])
+    slices:
+      import_tech:
+        - expression: import_electricity
+
+  fix_exports:
+    description: WIP Set exports to a percentage of total flow in each timestep
+    foreach: [nodes,techs,timesteps,investsteps]
+    where: export_min
+    equations:
+        - expression: >-  
+            sum(flow_out*import_max,over=[techs,carriers]) 
+            == sum(flow_out[techs=$export_tech],over=[carriers])
+    slices:
+      export_tech:
+        - expression: export_electricity
+
+

@@ -5,14 +5,15 @@ import:
   # - "scenarios.yaml" # Scenario and override group definitions
 
 
+
 # Model configuration: all settings that affect the built model
 config:
   init:
-    name: "Stationary capacity expansion problem: conditions kept constant over the years."
+    name: "Republic of Ireland Dynamic Model"
     # What version of Calliope this model is intended for
     calliope_version: 0.7.0
     # Activate pathways configuration
-    add_math: [../../math/pathways.yaml]
+    add_math: [../../math/pathways.yaml,model_config/restrictions.yaml]
     time_resample: "1m"
 
   build:
@@ -34,12 +35,28 @@ config:
 
 
 parameters:
+  emissions_max:
+      data: [1, 0.9, 0.85, 0.6, 0.4, 0.2, 0.1] # % of initial
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  emissions_initial:
+      data: 10e9 # kgCO2
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  import_max:
+      data: [0.1,0.1,0.1,0.05,0.05,0,0] # percentage
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  export_min:
+      data: [0,0,0,0,0,0.1,0.1] # percentage
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
   objective_cost_weights:
-    data: [1,1]
+    data: [1,0]
     index: [monetary,emissions]
     dims: costs
   # `bigM` sets the scale of unmet demand, which cannot be too high, otherwise the optimisation will not converge
-  bigM: 1e10
+  bigM: 1e6
   investstep_resolution:
     data: [2,5,5,5,5,5,5]
     index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
@@ -65,6 +82,11 @@ data_sources:
     rows: [nodes, techs, parameters]
     columns: [values]
     drop: values
+
+  maximum_deploy_rate_params:
+    source: data_sources/capacity_series/max_deploy_rate_techs.csv
+    rows: [techs, parameters]
+    columns: investsteps
 
   # Dynamic Series
 
@@ -208,7 +230,5 @@ data_sources:
     drop: [reference, comment]
     add_dimensions:
       costs: monetary
-      parameters: cost_flow_in
-
-  # Limits Series
+      parameters: cost_flow_out
 

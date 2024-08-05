@@ -3,23 +3,9 @@
 ##
 
 nodes:
-  # Import/export regions (UK&EU)
-  UKC:
-    techs:
-      import_electricity:
-      export_electricity:
-    latitude: 54.408
-    longitude: -7.031
-  EUC:
-    techs:
-      import_electricity:
-      export_electricity:
-    latitude: 51.867
-    longitude: -7.982
   # ROI Provinces
   CON:
     techs:
-      demand_electricity:
       oil:
       ccgt:
       bioenergy:
@@ -30,11 +16,11 @@ nodes:
       hydropower:
       tidal:
       battery_li:
+      demand_electricity:
     latitude: 53.83762430
     longitude: -8.95844810
   LEI:
     techs:
-      demand_electricity:
       oil:
       ccgt:
       waste:
@@ -46,11 +32,13 @@ nodes:
       hydropower:
       tidal:
       battery_li:
+      demand_electricity:
+      import_electricity:
+      export_electricity:
     latitude: 53.1667
     longitude: -7.0212
   MUN:
     techs:
-      demand_electricity:
       coal:
       ccgt:
       bioenergy:
@@ -61,11 +49,13 @@ nodes:
       hydropower:
       tidal:
       battery_li:
+      demand_electricity:
+      import_electricity:
+      export_electricity:
     latitude: 52.3433
     longitude: -8.7167
   ULS:
     techs:
-      demand_electricity:
       bioenergy:
       nuclear:
       onshore_wind:
@@ -74,5 +64,8 @@ nodes:
       hydropower:
       tidal:
       battery_li:
+      demand_electricity:
+      import_electricity:
+      export_electricity:
     latitude: 54.3611
     longitude: -7.4167

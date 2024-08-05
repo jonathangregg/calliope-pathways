@@ -14,11 +14,17 @@ LEI,pv,flow_cap_initial,622484.7856
 LEI,hydropower,flow_cap_initial,46945
 LEI,battery_phs,flow_cap_initial,292000
 LEI,battery_phs,storage_cap_initial,1421400
+LEI,import_electricity,flow_cap_initial,500000
+LEI,export_electricity,flow_cap_initial,500000
 MUN,coal,flow_cap_initial,750000
 MUN,ccgt,flow_cap_initial,1331000
 MUN,onshore_wind,flow_cap_initial,1748840
 MUN,pv,flow_cap_initial,103337.7896
 MUN,hydropower,flow_cap_initial,124065
+MUN,import_electricity,flow_cap_initial,500000
+MUN,export_electricity,flow_cap_initial,500000
 ULS,onshore_wind,flow_cap_initial,489760
 ULS,pv,flow_cap_initial,23215.65198
 ULS,hydropower,flow_cap_initial,80454
+ULS,import_electricity,flow_cap_initial,840000
+ULS,export_electricity,flow_cap_initial,840000

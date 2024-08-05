@@ -111,3 +111,4 @@ parameters:
       The weighting to give to each investment-step in the objective function.
       This usually refers to the number of years that one investment step represents (e.g. 10 years for the steps [2030, 2040, 2050]).
     x-unit: years.
+    
