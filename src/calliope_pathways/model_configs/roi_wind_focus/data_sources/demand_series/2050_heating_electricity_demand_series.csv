@@ -1,5 +1,5 @@
 reference,https://zenodo.org/records/3949553,,,
-comment,Regional 2016 demand,,,
+comment,Regional 2016 demand TEMP DATA FOR TESTING,,,
 nodes,CON,LEI,MUN,ULS
 techs,more_demand_electricity,more_demand_electricity,more_demand_electricity,more_demand_electricity
 parameters,sink_use_equals,sink_use_equals,sink_use_equals,sink_use_equals

@@ -2,7 +2,7 @@ reference,https://zenodo.org/records/3949553,,,
 comment,Regional 2016 demand,,,
 nodes,CON,LEI,MUN,ULS
 techs,demand_electricity,demand_electricity,demand_electricity,demand_electricity
-parameters,sink_use_min,sink_use_min,sink_use_min,sink_use_min
+parameters,sink_use_equals,sink_use_equals,sink_use_equals,sink_use_equals
 timesteps,,,,
 2016/01/01 00:00,370792.322,1766224.242,838120.7307,221862.7049
 2016/01/01 01:00,343598.3671,1639613.857,776806.9799,206980.7963
