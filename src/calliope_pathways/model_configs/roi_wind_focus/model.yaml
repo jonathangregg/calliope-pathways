@@ -2,7 +2,7 @@
 import:
   - "model_config/techs.yaml" # This file specifies the model's technologies
   - "model_config/locations.yaml" # This file specifies the model's nodes
-  # - "scenarios.yaml" # Scenario and override group definitions
+  #- "model_config/scenarios.yaml" # Scenario and override group definitions
 
 
 
@@ -35,8 +35,23 @@ config:
 
 
 parameters:
-  emissions_max:
-      data: [1, 0.9, 0.85, 0.6, 0.4, 0.2, 0.1] # % of initial
+  general_demand_growth_factor:
+      data: [1, 1, 1, 1, 1, 1, 1] # % of initial reference
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  transport_2050_requirement:
+    data: 7343750000 # 2050 fully electrified transport electricity demand
+    index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+    dims: investsteps
+  heating_electrification_factor:
+      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  transport_electrification_factor:
+      data: [0, 0.4, 0.8, 1, 1, 1, 1] # % of initial
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  emissions_max_ratio:
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
   emissions_initial:
@@ -47,10 +62,10 @@ parameters:
       data: [0.1,0.1,0.1,0.05,0.05,0,0] # percentage
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
-  export_min:
-      data: [0,0,0,0,0,0.1,0.1] # percentage
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
+  #export_min:
+      #data: [0,0,0,0,0,0.1,0.1] # percentage
+      #index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      #dims: investsteps
   objective_cost_weights:
     data: [1,0]
     index: [monetary,emissions]
@@ -209,10 +224,22 @@ data_sources:
   # Timestep Series - Demand & Import/Export
 
   electricity_demand_source_use_equals:
-    source: data_sources/timestep_series/regional_demand_series.csv
+    source: data_sources/demand_series/regional_demand_series.csv
     rows: timesteps
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
+
+  #heating_electricity_demand_source_use_equals:
+    #source: data_sources/demand_series/2050_heating_electricity_demand_series.csv
+    #rows: timesteps
+    #columns: [reference, comment, nodes, techs, parameters]
+    #drop: [reference, comment]
+
+  #transport_electricity_demand_source_use_equals:
+    #source: data_sources/demand_series/2050_heating_electricity_demand_series.csv
+    #rows: timesteps
+    #columns: [reference, comment, nodes, techs, parameters]
+    #drop: [reference, comment]
 
   electricity_import_cost_flow_out:
     source: data_sources/timestep_series/import_price_series.csv

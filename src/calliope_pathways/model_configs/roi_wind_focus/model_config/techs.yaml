@@ -210,8 +210,14 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
   ##
 
   demand_electricity:
-    name: "Electricity demand"
+    name: "Electricity Demand"
     color: "#072486"
+    base_tech: demand
+    carrier_in: electricity
+  
+  more_demand_electricity:
+    name: "More Electricity Demand"
+    color: "#072487"
     base_tech: demand
     carrier_in: electricity
 

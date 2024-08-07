@@ -2,11 +2,11 @@ constraints:
   emissions_targets:
     description: Limit emissions produced per timestep by a % of initial timestep
     foreach: [investsteps]
-    where: emissions_max AND emissions_initial
+    where: emissions_max_ratio AND emissions_initial
     equations:
         - expression: >-  
             sum(cost[costs=emissions], over=[nodes, techs]) 
-            <= emissions_max * emissions_initial
+            <= emissions_max_ratio * emissions_initial
           
   limit_imports:
     description: Limit imports to a percentage of total flow in each timestep
@@ -32,4 +32,32 @@ constraints:
       export_tech:
         - expression: export_electricity
 
+  limit_flow_cap_new_max_rate_fixed:
+    description: Limit maximum rate of new capacity build-out
+    foreach: [techs, carriers, investsteps]
+    where: flow_cap AND flow_cap_new_max_rate_fixed
+    equations:
+      - expression: 
+          sum(default_if_empty(flow_cap_new, 0) 
+          * available_vintages, over=[vintagesteps, nodes]) 
+          <= sum($prev_flow_cap, over=nodes) 
+          + flow_cap_new_max_rate_fixed
+    sub_expressions:
+      prev_flow_cap:
+        - where: NOT investsteps=get_val_at_index(investsteps=0)
+          expression: roll(flow_cap, investsteps=1)
+        - where: investsteps=get_val_at_index(investsteps=0) AND flow_cap_initial > 0
+          expression: flow_cap_initial
+
+  balance_demand: #WIP         + heating_max * heating_factor
+    equations:
+    - where: sink_use_equals
+      expression: >-
+        flow_in_inc_eff == 
+        sink_use_equals[techs=demand_electricity] * $sink_scaler * general_demand_growth_factor
+        + transport_2050_requirement * transport_electrification_factor 
+    - where: NOT sink_use_equals AND sink_use_max
+      expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * general_demand_factor
+
+  carbon_budget_carryover:
 
