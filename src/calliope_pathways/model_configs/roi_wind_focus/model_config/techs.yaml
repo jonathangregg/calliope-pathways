@@ -81,7 +81,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     carrier_out: electricity
     flow_ramping: 0.6 # Assumed
 
-    
+
   coal:
     # Initial Info
     name: 'Coal Plant'
@@ -131,7 +131,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
   ##
   # Renewable Techs
   ##
-  
+
   onshore_wind:
     # Initial Info
     name: 'Onshore Wind'
@@ -214,7 +214,36 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     color: "#072486"
     base_tech: demand
     carrier_in: electricity
-  
+    flow_cap_initial: 10e7
+    demand_factor:
+      data: [1, 1.1, 1.1, 1.2, 1.2, 1.3, 1.3] # % of initial reference
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+
+  # TODO: set demand factors appropriately
+  demand_electrified_heat:
+    name: "Electricified heat demand"
+    color: "#072486"
+    base_tech: demand
+    carrier_in: electricity
+    flow_cap_initial: 10e7
+    demand_factor:
+      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+
+  # TODO: set demand factors appropriately
+  demand_electrified_transport:
+    name: "Electrified transport demand"
+    color: "#072486"
+    base_tech: demand
+    carrier_in: electricity
+    flow_cap_initial: 10e7
+    demand_factor:
+      data: [0, 0.4, 0.8, 1, 1, 1, 1] # % of initial
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+
   #more_demand_electricity:
     #name: "More Electricity Demand"
     #color: "#072487"

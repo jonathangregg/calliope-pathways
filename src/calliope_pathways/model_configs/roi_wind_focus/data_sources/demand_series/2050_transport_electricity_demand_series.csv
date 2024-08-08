@@ -1,7 +1,7 @@
 reference,https://zenodo.org/records/3949553,,,
 comment,Regional 2016 demand TEMP DATA FOR TESTING,,,
 nodes,CON,LEI,MUN,ULS
-techs,demand_electrified_heat,demand_electrified_heat,demand_electrified_heat,demand_electrified_heat
+techs,demand_electrified_transport,demand_electrified_transport,demand_electrified_transport,demand_electrified_transport
 parameters,sink_use_equals,sink_use_equals,sink_use_equals,sink_use_equals
 timesteps,,,,
 2016/01/01 00:00,10000,10000,10000,10000
