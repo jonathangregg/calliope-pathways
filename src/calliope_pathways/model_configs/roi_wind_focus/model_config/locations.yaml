@@ -17,8 +17,8 @@ nodes:
       tidal:
       battery_li:
       demand_electricity:
-      heating_demand_electricity:
-      transport_demand_electricity:
+      demand_electrified_heat:
+      demand_electrified_transport:
     latitude: 53.83762430
     longitude: -8.95844810
   LEI:
@@ -35,8 +35,8 @@ nodes:
       tidal:
       battery_li:
       demand_electricity:
-      heating_demand_electricity:
-      transport_demand_electricity:
+      demand_electrified_heat:
+      demand_electrified_transport:
       import_electricity:
       export_electricity:
     latitude: 53.1667
@@ -54,8 +54,8 @@ nodes:
       tidal:
       battery_li:
       demand_electricity:
-      heating_demand_electricity:
-      transport_demand_electricity:
+      demand_electrified_heat:
+      demand_electrified_transport:
       import_electricity:
       export_electricity:
     latitude: 52.3433
@@ -71,8 +71,8 @@ nodes:
       tidal:
       battery_li:
       demand_electricity:
-      heating_demand_electricity:
-      transport_demand_electricity:
+      demand_electrified_heat:
+      demand_electrified_transport:
       import_electricity:
       export_electricity:
     latitude: 54.3611

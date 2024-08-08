@@ -4,17 +4,17 @@ constraints:
     foreach: [investsteps]
     where: emissions_max_ratio AND emissions_initial
     equations:
-        - expression: >-  
-            sum(cost[costs=emissions], over=[nodes, techs]) 
+        - expression: >-
+            sum(cost[costs=emissions], over=[nodes, techs])
             <= emissions_max_ratio * emissions_initial
-          
+
   limit_imports:
     description: Limit imports to a percentage of total flow in each timestep
     foreach: [nodes,techs,timesteps,investsteps]
     where: import_max
     equations:
-        - expression: >-  
-            sum(flow_out*import_max,over=[techs,carriers]) 
+        - expression: >-
+            sum(flow_out*import_max,over=[techs,carriers])
             >= sum(flow_out[techs=$import_tech],over=[carriers])
     slices:
       import_tech:
@@ -25,8 +25,8 @@ constraints:
     foreach: [nodes,techs,timesteps,investsteps]
     where: export_min
     equations:
-        - expression: >-  
-            sum(flow_out*import_max,over=[techs,carriers]) 
+        - expression: >-
+            sum(flow_out*import_max,over=[techs,carriers])
             == sum(flow_out[techs=$export_tech],over=[carriers])
     slices:
       export_tech:
@@ -37,10 +37,10 @@ constraints:
     foreach: [techs, carriers, investsteps]
     where: flow_cap AND flow_cap_new_max_rate_fixed
     equations:
-      - expression: 
-          sum(default_if_empty(flow_cap_new, 0) 
-          * available_vintages, over=[vintagesteps, nodes]) 
-          <= sum($prev_flow_cap, over=nodes) 
+      - expression:
+          sum(default_if_empty(flow_cap_new, 0)
+          * available_vintages, over=[vintagesteps, nodes])
+          <= sum($prev_flow_cap, over=nodes)
           + flow_cap_new_max_rate_fixed
     sub_expressions:
       prev_flow_cap:
@@ -52,14 +52,8 @@ constraints:
   balance_demand: #WIP         + heating_max * heating_factor
     equations:
     - where: sink_use_equals
-      expression: >-
-        flow_in_inc_eff == 
-        sink_use_equals[techs=demand_electricity] * $sink_scaler * demand_growth_factor
-
+      expression: flow_in_inc_eff == sink_use_equals * $sink_scaler * demand_factor
     - where: NOT sink_use_equals AND sink_use_max
-      expression: flow_in_inc_eff <= sink_use_max[techs=demand_electricity] * $sink_scaler * demand_growth_factor
+      expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_factor
 
   #carbon_budget_carryover:
-
-#        + sink_use_equals[techs=heating_demand_electricity] * $sink_scaler * demand_growth_factor[type=heating]
-#        + sink_use_equals[techs=transport_demand_electricity] * $sink_scaler * demand_growth_factor[type=transport]
