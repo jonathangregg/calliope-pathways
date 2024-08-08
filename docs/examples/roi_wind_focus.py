@@ -18,8 +18,6 @@ model = calliope_pathways.models.load(modelurl)
 
 # Run Model
 model.build()
-model.backend.verbose_strings()
-model.backend.to_lp("foo.lp")
 model.solve()
 
 # Plot Figure
