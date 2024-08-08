@@ -14,14 +14,14 @@ config:
     calliope_version: 0.7.0
     # Activate pathways configuration
     add_math: [../../math/pathways.yaml,model_config/restrictions.yaml]
-    time_resample: "1m"
+    time_resample: "1m" #1d
 
   build:
     ensure_feasibility: true # Switches on the "unmet demand" constraint
     mode: plan # Choices: plan, operate
  
   solve:
-    solver: cbc
+    solver: gurobi
     zero_threshold: 1e-10 # Any value coming out of the backend that is smaller than this (due to floating point errors, probably) will be set to zero
     solver_options: # Taken directly from Lombardi's study
       Method: 2
@@ -35,24 +35,16 @@ config:
 
 
 parameters:
-  general_demand_growth_factor:
-      data: [1, 1.1, 1.1, 1.2, 1.2, 1.3, 1.3] # % of initial reference
+  demand_growth_factor:
+      data:  [1, 1.5, 1.05, 1.05, 1.05, 1.05, 1.05] # % increase per year
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
-  transport_2050_requirement:
-    data: 73437500 # 2050 fully electrified transport electricity demand
-    index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-    dims: investsteps
-  heating_electrification_factor:
-      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
-  transport_electrification_factor:
-      data: [0, 0.4, 0.8, 1, 1, 1, 1] # % of initial
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
+  #electrification_factor:
+      #data: [[0, 0.2, 0.4, 0.6, 0.8, 1, 1],[0, 0.4, 0.8, 1, 1, 1, 1]] # % of initial
+      #index: [heating,transport]
+      #dims: type
   emissions_max_ratio:
-      data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.05]
+      data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
   emissions_initial:
@@ -225,19 +217,25 @@ data_sources:
   # Timestep Series - Demand & Import/Export
 
   electricity_demand_source_use_equals:
-    source: data_sources/demand_series/regional_demand_series.csv
+    source: data_sources/demand_series/combined_demand_series.csv
     rows: timesteps
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
 
+  #electricity_demand_source_use_equals:
+    #source: data_sources/demand_series/regional_demand_series.csv
+    #rows: timesteps
+    #columns: [reference, comment, nodes, techs, parameters]
+    #drop: [reference, comment]
+
   #heating_electricity_demand_source_use_equals:
-    #source: data_sources/demand_series/2050_heating_electricity_demand_series.csv
+    #source: data_sources/demand_series/heating_electricity_demand_series.csv
     #rows: timesteps
     #columns: [reference, comment, nodes, techs, parameters]
     #drop: [reference, comment]
 
   #transport_electricity_demand_source_use_equals:
-    #source: data_sources/demand_series/2050_heating_electricity_demand_series.csv
+    #source: data_sources/demand_series/transport_electricity_demand_series.csv
     #rows: timesteps
     #columns: [reference, comment, nodes, techs, parameters]
     #drop: [reference, comment]

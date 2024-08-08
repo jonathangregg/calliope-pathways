@@ -13,9 +13,7 @@ spores_dict = {}  # dictionary to collect SPORES designs as they get generated
 modelurl = "C:/Users/jdg57/calliope-pathways/src/calliope_pathways/model_configs/roi_wind_focus/model.yaml"
 
 # Loading model files and building the model
-model = calliope.Model(
-    "example_models/national_scale/model.yaml", scenario="scenario_X_SPORES"
-)
+model = calliope_pathways.models.load(modelurl)
 model.build()
 
 # Solving

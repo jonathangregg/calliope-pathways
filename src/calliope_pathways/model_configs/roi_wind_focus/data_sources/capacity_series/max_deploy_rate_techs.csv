@@ -1,5 +1,5 @@
 techs,parameters,2023,2025,2030,2035,2040,2045,2050
-oil,flow_cap_new_max_rate,0,10,10,10,10,10,10
+oil,flow_cap_new_max_rate,10,10,10,10,10,10,10
 coal,flow_cap_new_max_rate,0,10,10,10,10,10,10
 ccgt,flow_cap_new_max_rate,0,10,10,10,10,10,10
 waste,flow_cap_new_max_rate,0,10,10,10,10,10,10

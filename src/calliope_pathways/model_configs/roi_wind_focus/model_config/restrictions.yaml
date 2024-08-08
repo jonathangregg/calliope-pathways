@@ -54,10 +54,12 @@ constraints:
     - where: sink_use_equals
       expression: >-
         flow_in_inc_eff == 
-        sink_use_equals[techs=demand_electricity] * $sink_scaler * general_demand_growth_factor
-        + transport_2050_requirement * transport_electrification_factor
+        sink_use_equals[techs=demand_electricity] * $sink_scaler * demand_growth_factor
+
     - where: NOT sink_use_equals AND sink_use_max
-      expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * general_demand_growth_factor
+      expression: flow_in_inc_eff <= sink_use_max[techs=demand_electricity] * $sink_scaler * demand_growth_factor
 
   #carbon_budget_carryover:
 
+#        + sink_use_equals[techs=heating_demand_electricity] * $sink_scaler * demand_growth_factor[type=heating]
+#        + sink_use_equals[techs=transport_demand_electricity] * $sink_scaler * demand_growth_factor[type=transport]

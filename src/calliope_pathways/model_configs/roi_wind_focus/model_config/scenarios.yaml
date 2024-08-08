@@ -11,15 +11,18 @@ overrides:
     parameters:
       emissions_max_ratio:
         data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_IV_novel_techs: #enable tidal and nuclear
+  scenario_IV_high_wind:
+  
+  
+  scenario_VII_no_novel_techs: #enable tidal and nuclear
     parameters:
       emissions_max_ratio:
         data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_V_no_wind: #enable tidal and nuclear
+  scenario_IIX_CAPEX_emissions: #lower wind growth rates
     parameters:
       emissions_max_ratio:
         data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_VI_CAPEX_emissions:
+  scenario_IX_carbon_budget_overflow: #Enable CAPEX emissions
     parameters:
       emissions_max_ratio:
         data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.02]
