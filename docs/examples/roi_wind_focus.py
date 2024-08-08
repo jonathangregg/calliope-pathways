@@ -1,19 +1,26 @@
+import importlib
+
 import calliope
 import calliope_pathways
 import plotly.express as px
 
-#Set Variables
-modelurl = "C:/Users/jdg57/calliope-pathways/src/calliope_pathways/model_configs/roi_wind_focus/model.yaml"
+# Set Variables
+modelurl = (
+    importlib.resources.files("calliope_pathways")
+    / "model_configs"
+    / "roi_wind_focus"
+    / "model.yaml"
+)
 
-#Set up model
+# Set up model
 calliope.set_log_verbosity("INFO", include_solver_output=False)
 model = calliope_pathways.models.load(modelurl)
 
-#Run Model
+# Run Model
 model.build()
 model.solve()
 
-#Plot Figure
+# Plot Figure
 df_capacity = (
     model.results.flow_cap_new.where(model.results.techs != "demand_electricity")
     .sel(carriers="electricity")
