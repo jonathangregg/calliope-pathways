@@ -215,8 +215,12 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: demand
     carrier_in: electricity
     flow_cap_initial: 10e7
-    demand_factor:
-      data: [1, 1.1, 1.1, 1.2, 1.2, 1.3, 1.3] # % of initial reference
+    demand_growth_factor:
+      data: 1.05 # % of initial reference
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+    electrification_factor:
+      data: 1 # irrelevant to regular demand as it is entirely electricity
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
 
@@ -227,7 +231,11 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: demand
     carrier_in: electricity
     flow_cap_initial: 10e7
-    demand_factor:
+    demand_growth_factor:
+      data: 1.02 # % growth per year
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+    electrification_factor:
       data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
@@ -239,8 +247,12 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: demand
     carrier_in: electricity
     flow_cap_initial: 10e7
-    demand_factor:
-      data: [0, 0.4, 0.8, 1, 1, 1, 1] # % of initial
+    demand_growth_factor:
+      data: 1.02 # % growth per year
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+    electrification_factor:
+      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
 

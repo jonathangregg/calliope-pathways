@@ -49,11 +49,12 @@ constraints:
         - where: investsteps=get_val_at_index(investsteps=0) AND flow_cap_initial > 0
           expression: flow_cap_initial
 
-  balance_demand: #WIP         + heating_max * heating_factor
+  balance_demand:
     equations:
     - where: sink_use_equals
-      expression: flow_in_inc_eff == sink_use_equals * $sink_scaler * demand_factor
+      expression: flow_in_inc_eff == sink_use_equals * $sink_scaler * demand_growth_factor * electrification_factor
     - where: NOT sink_use_equals AND sink_use_max
-      expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_factor
+      expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_growth_factor * electrification_factor
 
   #carbon_budget_carryover:
+  #min_capacity_inc:

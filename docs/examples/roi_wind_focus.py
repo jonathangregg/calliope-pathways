@@ -11,18 +11,24 @@ modelurl = (
     / "roi_wind_focus"
     / "model.yaml"
 )
+scenario = "scenario_I_gov_targets"
 
 # Set up model
 calliope.set_log_verbosity("INFO", include_solver_output=False)
-model = calliope_pathways.models.load(modelurl)
+model = calliope_pathways.models.load(modelurl,scenario=scenario)
 
 # Run Model
 model.build()
 model.solve()
 
+filter1 = model.results.techs != "demand_electricity" 
+filter2 = model.results.techs != "demand_electrified_transport" 
+filter3 = model.results.techs != "demand_electrified_heat"
+
+
 # Plot Figure
 df_capacity = (
-    model.results.flow_cap_new.where(model.results.techs != "demand_electricity")
+    model.results.flow_cap_new.where(filter1 & filter2 & filter3)
     .sel(carriers="electricity")
     .sum("nodes")
     .to_series()
@@ -43,6 +49,7 @@ fig = px.bar(
 )
 fig.show()
 
+
 df_outflow = (
     (model.results.flow_out.fillna(0) - model.results.flow_in.fillna(0))
     .sel(carriers="electricity")
@@ -56,6 +63,10 @@ df_outflow = (
 
 print(df_capacity.head())
 
+filter1rev = model.results.techs == "demand_electricity" 
+filter2rev = model.results.techs == "demand_electrified_transport" 
+filter3rev = model.results.techs == "demand_electrified_heat"
+
 fig = px.bar(
     df_outflow,
     x="investsteps",
@@ -63,15 +74,18 @@ fig = px.bar(
     color="techs",
     color_discrete_map=model.inputs.color.to_series().to_dict(),
 )
+"""
 df_demand = (
-    model.results.flow_in.sel(techs="demand_electricity", carriers="electricity")
+    model.results.flow_in.where(filter1rev | filter2rev | filter3rev)
+    .sel(carriers="electricity")
     .sum(["nodes", "timesteps"])
     .to_series()
     .reset_index()
 )
 fig.add_scatter(
     x=df_demand.investsteps, y=df_demand.flow_in, line={"color": "black"}, name="Demand"
-)
+)"""
+
 fig.show()
 
 df_electricity = (
@@ -117,3 +131,4 @@ for row, year in enumerate(invest_order[::-1]):
     showlegend = False
 fig.update_yaxes(matches=None)
 fig.show()
+

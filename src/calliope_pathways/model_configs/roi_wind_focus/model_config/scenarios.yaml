@@ -1,28 +1,36 @@
+scenarios: #enable upper/lower sensitivity analysis to vary results
+  scenario_I_gov_targets: #estimated beyong 2030
+    gov_emission_targets:
+  scenario_II_high_targets: 
+  scenario_III_no_targets: 
+    no_emission_targets:
+  scenario_IV_no_new_wind:
+  scenario_IV_low_wind:
+  scenario_VI_high_wind:
+  scenario_VII_novel_techs: #enable tidal and nuclear
+    disable_novel_techs:
+  scenario_IIX_CAPEX_emissions: #Enable CAPEX emissions
+    enable_CAPEX_emissions:
+  scenario_IX_carbon_budget_overflow: #Enable CAPEX emissions
+    enable_overflow:
+
+
+
 overrides:
-  scenario_I_no_targets:
+  no_emission_targets:
     parameters:
       emissions_max_ratio:
         data: [1, 1, 1, 1, 1, 1, 1]
-  scenario_II_gov_targets: #estimated beyong 2030
+  gov_emission_targets:
     parameters:
       emissions_max_ratio:
-        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0]
-  scenario_III_linear_targets:
-    parameters:
-      emissions_max_ratio:
-        data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_IV_high_wind:
-  
-  
-  scenario_VII_no_novel_techs: #enable tidal and nuclear
-    parameters:
-      emissions_max_ratio:
-        data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_IIX_CAPEX_emissions: #lower wind growth rates
-    parameters:
-      emissions_max_ratio:
-        data: [1, 0.8, 0.6, 0.4, 0.2, 0, 0]
-  scenario_IX_carbon_budget_overflow: #Enable CAPEX emissions
-    parameters:
-      emissions_max_ratio:
-        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.02]
+        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
+  disable_novel_techs:
+    techs:
+      nuclear.flow_cap_new_max_rate_fixed: 0
+      tidal.flow_cap_new_max_rate_fixed: 0
+
+  enable_CAPEX_emissions:
+  enable_overflow:
+  upper_sensitivity_analysis:
+  lower_sensitivity_analysis:

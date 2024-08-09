@@ -2,7 +2,7 @@
 import:
   - "model_config/techs.yaml" # This file specifies the model's technologies
   - "model_config/locations.yaml" # This file specifies the model's nodes
-  #- "model_config/scenarios.yaml" # Scenario and override group definitions
+  - "model_config/scenarios.yaml" # Scenario and override group definitions
 
 
 
@@ -14,7 +14,7 @@ config:
     calliope_version: 0.7.0
     # Activate pathways configuration
     add_math: [../../math/pathways.yaml, math.yaml]
-    time_resample: "1m" #1d
+    time_resample: "1m" #4h 15min
 
   build:
     ensure_feasibility: true # Switches on the "unmet demand" constraint
@@ -35,12 +35,12 @@ config:
 
 
 parameters:
-  emissions_max_ratio:
-      data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
   emissions_initial:
       data: 10e9 # kgCO2
+      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      dims: investsteps
+  emissions_max_ratio:
+      data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
   import_max:
@@ -61,7 +61,6 @@ parameters:
     data: [2,5,5,5,5,5,5]
     index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
     dims: investsteps
-
 
 data_sources:
   # Capacity Series
@@ -209,19 +208,19 @@ data_sources:
   # Timestep Series - Demand & Import/Export
 
   electricity_demand_source_use_equals:
-    source: data_sources/demand_series/combined_demand_series.csv
+    source: data_sources/demand_series/regional_demand_series.csv
     rows: timesteps
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
 
   electrified_heat_demand_source_use_equals:
-    source: data_sources/demand_series/2050_heating_electricity_demand_series.csv
+    source: data_sources/demand_series/heating_electricity_demand_series.csv
     rows: timesteps
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
 
   electrified_transport_demand_source_use_equals:
-    source: data_sources/demand_series/2050_transport_electricity_demand_series.csv
+    source: data_sources/demand_series/transport_electricity_demand_series.csv
     rows: timesteps
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
