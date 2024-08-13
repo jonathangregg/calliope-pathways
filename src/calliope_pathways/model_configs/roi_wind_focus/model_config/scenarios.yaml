@@ -24,7 +24,7 @@ overrides:
   gov_emission_targets:
     parameters:
       emissions_max_ratio:
-        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
+        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 00]
   disable_novel_techs:
     techs:
       nuclear.flow_cap_new_max_rate_fixed: 0

@@ -40,8 +40,7 @@ constraints:
       - expression:
           sum(default_if_empty(flow_cap_new, 0)
           * available_vintages, over=[vintagesteps, nodes])
-          <= sum($prev_flow_cap, over=nodes)
-          + flow_cap_new_max_rate_fixed
+          <= flow_cap_new_max_rate_fixed
     sub_expressions:
       prev_flow_cap:
         - where: NOT investsteps=get_val_at_index(investsteps=0)
@@ -53,6 +52,7 @@ constraints:
     equations:
     - where: sink_use_equals
       expression: flow_in_inc_eff == sink_use_equals * $sink_scaler * demand_growth_factor * electrification_factor
+      
     - where: NOT sink_use_equals AND sink_use_max
       expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_growth_factor * electrification_factor
 

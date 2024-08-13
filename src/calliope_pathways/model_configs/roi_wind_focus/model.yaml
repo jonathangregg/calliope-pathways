@@ -43,10 +43,10 @@ parameters:
       data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
-  import_max:
-      data: [0.1,0.1,0.1,0.05,0.05,0,0] # percentage
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
+  #import_max:
+      #data: [0.2,0.2,0.2,0.1,0.05,0,0] # percentage
+      #index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+      #dims: investsteps
   #export_min:
       #data: [0,0,0,0,0,0.1,0.1] # percentage
       #index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
@@ -83,7 +83,7 @@ data_sources:
     drop: values
 
   maximum_deploy_rate_params:
-    source: data_sources/capacity_series/max_deploy_rate_techs.csv
+    source: data_sources/capacity_series/alt_max_deploy_rate_techs.csv
     rows: [techs, parameters]
     columns: investsteps
 
@@ -93,13 +93,6 @@ data_sources:
     source: data_sources/dynamic_series/dynamic_efficiency_techs.csv
     rows: [techs, parameters]
     columns: investsteps
-
-  dynamic_emissions_techs_params:
-    source: data_sources/dynamic_series/dynamic_emissions_techs.csv
-    rows: [techs, parameters]
-    columns: investsteps
-    add_dimensions:
-      costs: emissions
 
   dynamic_lifetime_techs_params:
     source: data_sources/dynamic_series/dynamic_lifetime_techs.csv

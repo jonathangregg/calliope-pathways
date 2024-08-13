@@ -2,11 +2,11 @@ nodes,techs,parameters,values
 CON,oil,flow_cap_initial,104000
 CON,ccgt,flow_cap_initial,389000
 CON,onshore_wind,flow_cap_initial,993400
-CON,pv,flow_cap_initial,37291.7728
+CON,pv,flow_cap_initial,37292
 CON,hydropower,flow_cap_initial,2460
 LEI,oil,flow_cap_initial,220000
 LEI,ccgt,flow_cap_initial,2092000
-LEI,waste,flow_cap_initial,78000
+LEI,waste,flow_cap_initial,52420
 LEI,bioenergy,flow_cap_initial,118000
 LEI,onshore_wind,flow_cap_initial,467250
 LEI,offshore_wind,flow_cap_initial,25000
@@ -22,7 +22,7 @@ MUN,onshore_wind,flow_cap_initial,1748840
 MUN,pv,flow_cap_initial,103337.7896
 MUN,hydropower,flow_cap_initial,124065
 ULS,onshore_wind,flow_cap_initial,489760
-ULS,pv,flow_cap_initial,23215.65198
+ULS,pv,flow_cap_initial,23216
 ULS,hydropower,flow_cap_initial,80454
 ULS,import_electricity,flow_cap_initial,840000
 ULS,export_electricity,flow_cap_initial,840000

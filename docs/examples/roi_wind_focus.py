@@ -49,6 +49,47 @@ fig = px.bar(
 )
 fig.show()
 
+df_capacity = (
+    model.results.flow_cap.where(filter1 & filter2 & filter3)
+    .sel(carriers="electricity")
+    .sum("nodes")
+    .to_series()
+    .where(lambda x: x != 0)
+    .dropna()
+    .to_frame("Flow capacity (kW)")
+    .reset_index()
+)
+
+print(df_capacity.head())
+
+fig = px.bar(
+    df_capacity,
+    x="investsteps",
+    y="Flow capacity (kW)",
+    color="techs",
+    color_discrete_map=model.inputs.color.to_series().to_dict(),
+)
+fig.show()
+
+df_capacity = (
+    model.results.storage_cap.sum("nodes")
+    .to_series()
+    .where(lambda x: x != 0)
+    .dropna()
+    .to_frame("Storage capacity (kWh)")
+    .reset_index()
+)
+
+print(df_capacity.head())
+
+fig = px.bar(
+    df_capacity,
+    x="investsteps",
+    y="Storage capacity (kWh)",
+    color="techs",
+    color_discrete_map=model.inputs.color.to_series().to_dict(),
+)
+fig.show()
 
 df_outflow = (
     (model.results.flow_out.fillna(0) - model.results.flow_in.fillna(0))
@@ -60,6 +101,7 @@ df_outflow = (
     .to_frame("Annual outflow (kWh)")
     .reset_index()
 )
+
 
 print(df_capacity.head())
 
