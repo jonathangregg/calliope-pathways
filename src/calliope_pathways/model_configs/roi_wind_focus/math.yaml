@@ -32,21 +32,23 @@ constraints:
       export_tech:
         - expression: export_electricity
 
-  limit_flow_cap_new_max_rate_fixed:
+  limit_flow_cap_new_max_rate_sum:
     description: Limit maximum rate of new capacity build-out
-    foreach: [techs, carriers, investsteps]
-    where: flow_cap AND flow_cap_new_max_rate_fixed
+    foreach: [techs, carriers, vintagesteps]
+    where: flow_cap AND flow_cap_new_max_rate_sum
     equations:
-      - expression:
-          sum(default_if_empty(flow_cap_new, 0)
-          * available_vintages, over=[vintagesteps, nodes])
-          <= flow_cap_new_max_rate_fixed
-    sub_expressions:
-      prev_flow_cap:
-        - where: NOT investsteps=get_val_at_index(investsteps=0)
-          expression: roll(flow_cap, investsteps=1)
-        - where: investsteps=get_val_at_index(investsteps=0) AND flow_cap_initial > 0
-          expression: flow_cap_initial
+      - expression: >-
+          sum(flow_cap_new, over=nodes)
+          <= flow_cap_new_max_rate_sum
+
+  limit_storage_cap_new_max_rate_sum:
+    description: Limit maximum rate of new storage build-out
+    foreach: [techs, carriers, vintagesteps]
+    where: storage_cap AND storage_cap_new_max_rate_sum
+    equations:
+      - expression: >-
+          sum(storage_cap_new, over=nodes)
+          <= storage_cap_new_max_rate_sum
 
   balance_demand:
     equations:
@@ -56,5 +58,7 @@ constraints:
     - where: NOT sink_use_equals AND sink_use_max
       expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_growth_factor * electrification_factor
 
+
   #carbon_budget_carryover:
   #min_capacity_inc:
+

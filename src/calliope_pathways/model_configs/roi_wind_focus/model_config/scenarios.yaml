@@ -1,36 +1,95 @@
 scenarios: #enable upper/lower sensitivity analysis to vary results
-  scenario_I_gov_targets: #estimated beyong 2030
+  scenario_I-I_default_lw:
+    low_offshore_wind_deployment:
+  scenario_I-II_default_mw:
+    medium_offshore_wind_deployment:
+  scenario_I-III_default_hw:
+    high_offshore_wind_deployment:
+
+  scenario_II-I_gov_targets_lw:
+  scenario_II-II_gov_targets_mw:
+  scenario_II-III_gov_targets_hw: #estimated beyong 2030
     gov_emission_targets:
-  scenario_II_high_targets: 
-  scenario_III_no_targets: 
+  
+  scenario_III-I_carbon_budget_lw: 
+  scenario_III-II_carbon_budget_mw: 
+  scenario_III-III_carbon_budget_hw:
+
+
+  scenario_IV-I_enhanced_bio_lw: 
+  scenario_IV-II_enhanced_bio_mw: 
+  scenario_IV-III_enhanced_bio_hw:
+
+  scenario_V-I_novel_techs_lw: 
+  scenario_V-II_novel_techs_mw: 
+  scenario_V-III_novel_techs_hw:
+
+  scenario_VI-I_inc_pv_lw: 
+  scenario_VI-II_inc_pv_mw: 
+  scenario_VI-III_inc_pv_hw:
+
+
+  scenario_VII-I_inc_dem_lw: 
+  scenario_VII-II_inc_dem_mw: 
+  scenario_VII-III_inc_dem_hw:
+
+  scenario_IIX-I_dec_onwind_lw: 
+  scenario_IIX-II_dec_onwind_mw: 
+  scenario_IIX-III_dec_onwind_hw:
+
+  scenario_IX-I_no_more_storage_lw: 
+  scenario_IX-II_no_more_storage_mw: 
+  scenario_IX-III_no_more_storage_hw:
+
+
+  sensitivity_I:
+
+
+  scenario_II-I_: 
     no_emission_targets:
   scenario_IV_no_new_wind:
   scenario_IV_low_wind:
   scenario_VI_high_wind:
   scenario_VII_novel_techs: #enable tidal and nuclear
-    disable_novel_techs:
+    enable_novel_techs:
   scenario_IIX_CAPEX_emissions: #Enable CAPEX emissions
     enable_CAPEX_emissions:
-  scenario_IX_carbon_budget_overflow: #Enable CAPEX emissions
-    enable_overflow:
+  scenario_IX_worst_case: #Enable CAPEX emissions
 
 
 
 overrides:
+  low_offshore_wind_deployment:
+    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+  medium_offshore_wind_deployment:
+    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+  high_offshore_wind_deployment:
+    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+
   no_emission_targets:
     parameters:
-      emissions_max_ratio:
-        data: [1, 1, 1, 1, 1, 1, 1]
+      emissions_max_ratio.data: [1, 1, 1, 1, 1, 1, 1]
   gov_emission_targets:
     parameters:
-      emissions_max_ratio:
-        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 00]
-  disable_novel_techs:
+      emissions_max_ratio.data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0]
+  enable_novel_techs:
     techs:
-      nuclear.flow_cap_new_max_rate_fixed: 0
-      tidal.flow_cap_new_max_rate_fixed: 0
+      nuclear.flow_cap_new_max_rate_sum: [0,0,0,300000,300000,600000,600000]
+      tidal.flow_cap_new_max_rate_sum: [0,0,5,10,50,100,100]
 
   enable_CAPEX_emissions:
+    data_sources:
+      dynamic_monetary_techs_params:
+        source: data_sources/static_series/CAPEX_emissions_techs.csv
+        rows: [techs, parameters]
+        columns: [values]
+        add_dimensions:
+          costs: emissions
+        drop: values
+    parameters:
+      emissions_max_ratio:
+        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
+    
   enable_overflow:
   upper_sensitivity_analysis:
   lower_sensitivity_analysis:

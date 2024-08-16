@@ -11,8 +11,10 @@ modelurl = (
     / "roi_wind_focus"
     / "model.yaml"
 )
-scenario = "scenario_I_gov_targets"
 
+
+scenario = "scenario_II-III_gov_targets_hw"
+#scenario = "scenario_IIX_CAPEX_emissions"
 # Set up model
 calliope.set_log_verbosity("INFO", include_solver_output=False)
 model = calliope_pathways.models.load(modelurl,scenario=scenario)
@@ -20,11 +22,12 @@ model = calliope_pathways.models.load(modelurl,scenario=scenario)
 # Run Model
 model.build()
 model.solve()
+#print(model.results.unmet_demand())
 
 filter1 = model.results.techs != "demand_electricity" 
 filter2 = model.results.techs != "demand_electrified_transport" 
 filter3 = model.results.techs != "demand_electrified_heat"
-
+# Plot Figure
 
 # Plot Figure
 df_capacity = (

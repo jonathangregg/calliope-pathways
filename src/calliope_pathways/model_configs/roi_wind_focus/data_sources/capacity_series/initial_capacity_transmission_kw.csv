@@ -1,6 +1,6 @@
 techs,parameters,values
-ac_CON_to_MUN,flow_cap_initial,1500000
-ac_CON_to_ULS,flow_cap_initial,600000
-ac_LEI_to_CON,flow_cap_initial,1400000
-ac_LEI_to_ULS,flow_cap_initial,900000
-ac_LEI_to_MUN,flow_cap_initial,1900000
+ac_CON_to_MUN,flow_cap_initial,750000
+ac_CON_to_ULS,flow_cap_initial,300000
+ac_LEI_to_CON,flow_cap_initial,700000
+ac_LEI_to_ULS,flow_cap_initial,450000
+ac_LEI_to_MUN,flow_cap_initial,950000

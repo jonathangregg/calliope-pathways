@@ -11,9 +11,12 @@ import xarray as xr
 
 spores_dict = {}  # dictionary to collect SPORES designs as they get generated
 modelurl = "C:/Users/jdg57/calliope-pathways/src/calliope_pathways/model_configs/roi_wind_focus/model.yaml"
-
+scenario = "scenario_II-III_gov_targets_hw"
 # Loading model files and building the model
-model = calliope_pathways.models.load(modelurl)
+calliope.set_log_verbosity("INFO", include_solver_output=False)
+model = calliope.Model(
+    modelurl, scenario=scenario
+)
 model.build()
 
 # Solving
