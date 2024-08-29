@@ -8,7 +8,9 @@ nodes:
     techs:
       oil:
       ccgt:
+      bioenergy_lc:
       bioenergy:
+      bioenergy_hc:
       nuclear:
       onshore_wind:
       offshore_wind:
@@ -26,7 +28,9 @@ nodes:
       oil:
       ccgt:
       waste:
+      bioenergy_lc:
       bioenergy:
+      bioenergy_hc:
       nuclear:
       onshore_wind:
       offshore_wind:
@@ -45,7 +49,9 @@ nodes:
     techs:
       coal:
       ccgt:
+      bioenergy_lc:
       bioenergy:
+      bioenergy_hc:
       nuclear:
       onshore_wind:
       offshore_wind:
@@ -62,7 +68,9 @@ nodes:
     longitude: -8.7167
   ULS:
     techs:
+      bioenergy_lc:
       bioenergy:
+      bioenergy_hc:
       nuclear:
       onshore_wind:
       offshore_wind:

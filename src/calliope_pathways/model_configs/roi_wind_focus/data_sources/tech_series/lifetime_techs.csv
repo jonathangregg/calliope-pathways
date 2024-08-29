@@ -3,8 +3,13 @@ oil,lifetime,25
 coal,lifetime,25
 ccgt,lifetime,25
 waste,lifetime,25
+bioenergy_lc,lifetime,25
 bioenergy,lifetime,25
+bioenergy_hc,lifetime,25
 nuclear,lifetime,40
+onshore_wind,lifetime,30
+offshore_wind,lifetime,30
+pv,lifetime,40
 hydropower,lifetime,55
 tidal,lifetime,40
 battery_li,lifetime,10

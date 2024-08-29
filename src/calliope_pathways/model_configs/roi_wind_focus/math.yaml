@@ -1,36 +1,63 @@
 constraints:
   emissions_targets:
-    description: Limit emissions produced per timestep by a % of initial timestep
+    description: Limit emissions produced per timestep by a % of given value (2018 emissions)
     foreach: [investsteps]
     where: emissions_max_ratio AND emissions_initial
     equations:
-        - expression: >-
-            sum(cost[costs=emissions], over=[nodes, techs])
-            <= emissions_max_ratio * emissions_initial
+      - where: "NOT config.carbon_budget=True"
+        expression: >-
+          sum(cost[costs=emissions], over=[nodes, techs])
+          <= emissions_max_ratio * emissions_initial
+      - where: "config.carbon_budget=True"
+        expression: >-
+          sum(cost[costs=emissions], over=[nodes, techs, investsteps])
+          <= emissions_initial * sum(emissions_max_ratio,over=[investsteps])
+  emissions_targets_last_year:
+    description: Ensure emissions reach final value
+    foreach: [investsteps]
+    where: emissions_max_ratio AND emissions_initial AND investsteps=get_val_at_index(investsteps=-1)
+    equations:
+      - expression: sum(cost[costs=emissions], over=[nodes, techs]) <= emissions_max_ratio * emissions_initial
 
+
+  # Fixed Constraints
   limit_imports:
     description: Limit imports to a percentage of total flow in each timestep
     foreach: [nodes,techs,timesteps,investsteps]
     where: import_max
     equations:
         - expression: >-
-            sum(flow_out*import_max,over=[techs,carriers])
+            (sum(flow_out,over=[techs,carriers]) - sum(flow_out[techs=$import_tech],over=[carriers]) - sum(flow_out[techs=$export_tech],over=[carriers])) * import_max
             >= sum(flow_out[techs=$import_tech],over=[carriers])
     slices:
       import_tech:
         - expression: import_electricity
+      export_tech:
+        - expression: import_electricity
 
-  fix_exports:
-    description: WIP Set exports to a percentage of total flow in each timestep
-    foreach: [nodes,techs,timesteps,investsteps]
-    where: export_min
+  import_export_match:
+    description: link export and import capacity as they are the same line
+    foreach: [nodes,carriers,investsteps]
+    where: defined(techs=[import_electricity, export_electricity], within=nodes, how=all)
     equations:
         - expression: >-
-            sum(flow_out*import_max,over=[techs,carriers])
-            == sum(flow_out[techs=$export_tech],over=[carriers])
-    slices:
-      export_tech:
-        - expression: export_electricity
+            flow_cap[techs=import_electricity] == flow_cap[techs=export_electricity]
+
+  limit_flow_out_minimum:
+    description: Prevents tech from using below a load factor
+    foreach: [nodes, techs, carriers, investsteps, timesteps]
+    where: flow_cap AND flow_out AND load_factor
+    equations:
+      - expression: >-
+          flow_out >= load_factor * 24 * 365.25 * flow_cap
+
+  limit_flow_out_maximum_sum:
+    description: set limit for yearly outflow
+    foreach: [techs,carriers,vintagesteps,investsteps]
+    where: flow_out AND flow_out_max_sum
+    equations:
+        - expression: >-
+            flow_out_max_sum >= sum(flow_out, over=[nodes,timesteps])
 
   limit_flow_cap_new_max_rate_sum:
     description: Limit maximum rate of new capacity build-out
@@ -41,6 +68,15 @@ constraints:
           sum(flow_cap_new, over=nodes)
           <= flow_cap_new_max_rate_sum
 
+  limit_flow_cap_new_min_rate_sum:
+    description: Limit minimum rate of new capacity build-out
+    foreach: [techs, carriers, vintagesteps]
+    where: flow_cap AND flow_cap_new_min_rate_sum
+    equations:
+      - expression: >-
+          sum(flow_cap_new, over=nodes)
+          >= flow_cap_new_min_rate_sum
+
   limit_storage_cap_new_max_rate_sum:
     description: Limit maximum rate of new storage build-out
     foreach: [techs, carriers, vintagesteps]
@@ -50,15 +86,55 @@ constraints:
           sum(storage_cap_new, over=nodes)
           <= storage_cap_new_max_rate_sum
 
+  limit_storage_cap_new_min_rate_sum:
+    description: Limit minimum rate of new storage build-out
+    foreach: [techs, carriers, vintagesteps]
+    where: storage_cap AND storage_cap_new_min_rate_sum
+    equations:
+      - expression: >-
+          sum(storage_cap_new, over=nodes)
+          >= storage_cap_new_min_rate_sum
+
+  nuclear_aux_load:
+    description: Set bioenergy requirement for all nuclear use
+    foreach: [nodes,techs,timesteps,investsteps]
+    where: aux_req AND flow_out
+    equations:
+        - expression: >-
+            sum(flow_out[techs=$aux_tech],over=[carriers])
+            >= sum(flow_out,over=[carriers]) * aux_req
+    slices:
+      aux_tech:
+        - expression: bioenergy_lc
+
   balance_demand:
     equations:
     - where: sink_use_equals
       expression: flow_in_inc_eff == sink_use_equals * $sink_scaler * demand_growth_factor * electrification_factor
-      
     - where: NOT sink_use_equals AND sink_use_max
       expression: flow_in_inc_eff <= sink_use_max * $sink_scaler * demand_growth_factor * electrification_factor
 
-
   #carbon_budget_carryover:
-  #min_capacity_inc:
 
+  #limit_flow_cap_unit_size_min:
+    #description: prevent capacity below a certain size being built as plants cannot be too small
+    #foreach: [nodes,techs,carriers,investsteps,investsteps]
+    #where: flow_cap_unit_size_min AND flow_cap_new>0
+    #equations:
+      #- expression: flow_cap_new >= flow_cap_unit_size_min
+
+  #limit_unit_size_equals:
+    #description: prevent capacity below a certain size being built as plants cannot be too small
+    #foreach: [nodes,techs,carriers,vintagesteps]
+    #where: flow_cap_unit_size_equals AND flow_cap_new>0
+    #equations:
+        #- expression: >-
+            #flow_cap_new == flow_cap_unit_size_equals
+
+  #limit_storage_size_min:
+    #description: prevent capacity below a certain size being built as plants cannot be too small
+    #foreach: [nodes,techs,carriers,vintagesteps]
+    #where: storage_cap_unit_size_min AND storage_cap_new>0
+    #equations:
+        #- expression: >-
+            #storage_cap_new >= storage_cap_unit_size_min

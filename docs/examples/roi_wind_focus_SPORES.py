@@ -10,13 +10,13 @@ import plotly.express as px
 import xarray as xr
 
 spores_dict = {}  # dictionary to collect SPORES designs as they get generated
+#modelurl = "C:/Users/jdg57/calliope-pathways/src/calliope_pathways/model_configs/national_scale_SPORES/model.yaml"
 modelurl = "C:/Users/jdg57/calliope-pathways/src/calliope_pathways/model_configs/roi_wind_focus/model.yaml"
-scenario = "scenario_II-III_gov_targets_hw"
+#scenario = "new_spores"
+scenario = "spores"
 # Loading model files and building the model
 calliope.set_log_verbosity("INFO", include_solver_output=False)
-model = calliope.Model(
-    modelurl, scenario=scenario
-)
+model = calliope_pathways.models.load(modelurl,scenario=scenario)
 model.build()
 
 # Solving
@@ -134,13 +134,15 @@ print(spore_ds.flow_cap.diff("spores").to_series().dropna().unstack("spores"))
 print(score_da.to_series().dropna())
 
 # %%
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 #
-# ax = plt.subplot(111)
+ax = plt.subplot(111)
 #
-# spore_ds.flow_cap.sel(spores=1, carriers="power").where(
-#     model.inputs.spores_tracker
-# ).dropna("techs").to_pandas().fillna(0).plot.bar(
-#     ax=ax, ylabel="Capacity (kW)", ylim=[0, 40000]
-# )
-# # spores_dict[1].flow_cap.sel(carriers='power', techs=cool_techs).# to_pandas().fillna(0).plot.bar(ax=ax, xticks=[k -0.5 for k in # xticks])
+spore_ds.flow_cap.sel(spores=498, carriers="electricity",investsteps="2050",nodes="LEI").where(
+    model.inputs.spores_tracker
+).dropna("techs").to_pandas().fillna(0).plot.bar(
+    ax=ax, ylabel="Capacity (kW)", ylim=[0, 2000000]
+)
+plt.show()
+
+#spores_dict[1].flow_cap.sel(carriers='power', techs=cool_techs).to_pandas().fillna(0).plot.bar(ax=ax, xticks=[k -0.5 for k in # xticks])

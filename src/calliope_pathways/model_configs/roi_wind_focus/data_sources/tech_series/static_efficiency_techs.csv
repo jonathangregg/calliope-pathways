@@ -2,6 +2,10 @@ techs,parameters,values
 oil,flow_out_eff,0.36
 coal,flow_out_eff,0.39
 ccgt,flow_out_eff,0.48
+waste,flow_out_eff,0.23
+bioenergy_lc,flow_out_eff,0.3
+bioenergy,flow_out_eff,0.3
+bioenergy_hc,flow_out_eff,0.3
 nuclear,flow_out_eff,0.35
 hydropower,source_eff,0.78
 battery_li,flow_in_eff,0.92

@@ -14,11 +14,12 @@ config:
     calliope_version: 0.7.0
     # Activate pathways configuration
     add_math: [../../math/pathways.yaml, math.yaml]
-    time_resample: "1m" #4h 15min
+    time_resample: "3h" #4h 15min
 
   build:
-    ensure_feasibility: true # Switches on the "unmet demand" constraint
-    mode: plan # Choices: plan, operate
+    ensure_feasibility: False # Switches on the "unmet demand" constraint,V-III onwards
+    carbon_budget: False
+    mode: plan # Choices: plan, operate, spores
 
   solve:
     solver: gurobi
@@ -36,21 +37,17 @@ config:
 
 parameters:
   emissions_initial:
-      data: 10e9 # kgCO2
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
+    data: null # kgCO2
+    index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+    dims: investsteps
   emissions_max_ratio:
-      data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
+    data: null
+    index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+    dims: investsteps
   import_max:
-      data: 0.2 # percentage
-      index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      dims: investsteps
-  #export_min:
-      #data: [0,0,0,0,0,0.1,0.1] # percentage
-      #index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
-      #dims: investsteps
+    data: 0.1 # percentage
+    index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
+    dims: investsteps
   objective_cost_weights:
     data: [1,0]
     index: [monetary,emissions]
@@ -87,54 +84,58 @@ data_sources:
     rows: [techs, parameters]
     columns: vintagesteps
 
-  # Dynamic Series
-
-  dynamic_efficiency_techs_params:
-    source: data_sources/dynamic_series/dynamic_efficiency_techs.csv
+  maximum_flow_rate_params:
+    source: data_sources/capacity_series/BAU_max_flow_techs.csv
     rows: [techs, parameters]
     columns: investsteps
 
-  dynamic_lifetime_techs_params:
-    source: data_sources/dynamic_series/dynamic_lifetime_techs.csv
-    rows: [techs, parameters]
-    columns: investsteps
+  #unit_size_params:
+    #source: data_sources/capacity_series/unit_size.csv
+    #rows: [techs, parameters]
+    #columns: values
+    #drop: values
 
-  dynamic_monetary_techs_params:
-    source: data_sources/dynamic_series/dynamic_monetary_techs.csv
-    rows: [techs, parameters]
-    columns: investsteps
-    add_dimensions:
-      costs: monetary
 
-  # Static Series
+  # Tech Series
 
   static_efficiency_techs_params:
-    source: data_sources/static_series/static_efficiency_techs.csv
+    source: data_sources/tech_series/static_efficiency_techs.csv
     rows: [techs, parameters]
     columns: [values]
     drop: values
 
-  static_emissions_techs_params:
-    source: data_sources/static_series/static_emissions_techs.csv
+  emissions_techs_params:
+    source: data_sources/tech_series/emissions_techs.csv
     rows: [techs, parameters]
-    columns: [values]
+    columns: investsteps
     add_dimensions:
       costs: emissions
-    drop: values
 
-  static_lifetime_techs_params:
-    source: data_sources/static_series/static_lifetime_techs.csv
+  dynamic_efficiency_techs_params:
+    source: data_sources/tech_series/dynamic_efficiency_techs.csv
+    rows: [techs, parameters]
+    columns: investsteps
+
+  lifetime_techs_params:
+    source: data_sources/tech_series/lifetime_techs.csv
     rows: [techs, parameters]
     columns: [values]
     drop: values
 
   static_monetary_techs_params:
-    source: data_sources/static_series/static_monetary_techs.csv
+    source: data_sources/tech_series/static_monetary_techs.csv
     rows: [techs, parameters]
     columns: [values]
     add_dimensions:
       costs: monetary
     drop: values
+
+  dynamic_monetary_techs_params:
+    source: data_sources/tech_series/dynamic_monetary_techs.csv
+    rows: [techs, parameters]
+    columns: vintagesteps
+    add_dimensions:
+      costs: monetary
 
   # Investstep Series
 
@@ -218,21 +219,12 @@ data_sources:
     columns: [reference, comment, nodes, techs, parameters]
     drop: [reference, comment]
 
-  electricity_import_cost_flow_out:
-    source: data_sources/timestep_series/import_price_series.csv
+  international_proces_cost_flow_out:
+    source: data_sources/timestep_series/international_prices_series.csv
     rows: timesteps
-    columns: [reference, comment, nodes, techs]
+    columns: [reference, comment, techs]
     drop: [reference, comment]
     add_dimensions:
+      nodes: [CON,LEI,ULS]
       costs: monetary
       parameters: cost_flow_out
-
-  electricity_export_cost_flow_in:
-    source: data_sources/timestep_series/export_price_series.csv
-    rows: timesteps
-    columns: [reference, comment, nodes, techs]
-    drop: [reference, comment]
-    add_dimensions:
-      costs: monetary
-      parameters: cost_flow_out
-

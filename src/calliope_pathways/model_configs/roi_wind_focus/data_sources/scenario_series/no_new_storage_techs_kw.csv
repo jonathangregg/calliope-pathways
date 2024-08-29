@@ -1,0 +1,10 @@
+nodes,techs,parameters,values
+CON,battery_li,storage_cap_max,69942
+LEI,battery_li,storage_cap_max,339483
+LEI,battery_phs,flow_cap_max,292000
+LEI,battery_phs,storage_cap_max,1752000
+MUN,battery_li,storage_cap_max,162429
+MUN,battery_phs,flow_cap_max,0
+MUN,battery_phs,storage_cap_max,0
+ULS,battery_li,storage_cap_max,37146
+

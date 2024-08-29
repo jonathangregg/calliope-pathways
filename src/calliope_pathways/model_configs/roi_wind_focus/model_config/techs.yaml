@@ -44,6 +44,11 @@ tech_groups:
       data: 0.10 #FIND SOURCE BUT LEAVE FOR NOW
       index: monetary
       dims: costs
+    flow_cap_new_max_rate_sum:
+      data: null
+      index: [2023,2025,2030,2035,2040,2045,2050]
+      dims: vintagesteps
+
 
   inter_zonal_transmission:
     name: "Transmission intra-zonal electricity"
@@ -63,7 +68,7 @@ tech_groups:
       index: monetary
       dims: costs
     cost_flow_cap:
-      data: 450   # EUR2010/kW, from Lombardi
+      data: 250  # EUR2010/kW, from Lombardi
       index: monetary
       dims: costs
 
@@ -111,6 +116,16 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: supply
     inherit: cost_dim_setter
     carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
+
+  bioenergy_lc:
+    # Initial Info
+    name: "Low Cost Biogas, biofuel and biomass electricity generation"
+    color: '#5AA24D'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
 
   bioenergy:
     # Initial Info
@@ -119,6 +134,16 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: supply
     inherit: cost_dim_setter
     carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
+  
+  bioenergy_hc:
+    # Initial Info
+    name: "High Cost Biogas, biofuel and biomass electricity generation"
+    color: '#5AA24D'
+    base_tech: supply
+    inherit: cost_dim_setter
+    carrier_out: electricity
+    flow_ramping: 0.6 # Assumed
 
   nuclear:
     # Initial Info
@@ -127,6 +152,8 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     base_tech: supply
     inherit: cost_dim_setter
     carrier_out: electricity
+    load_factor: 0.85
+    flow_ramping: 0.05
 
   ##
   # Renewable Techs
@@ -177,7 +204,6 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     inherit: cost_dim_setter
     carrier_out: electricity
     source_unit: per_cap
-    efficiency: 0
     #include_storage: true  # TODO: unclear how to make this work
 
   ##
@@ -192,9 +218,9 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     carrier_in: electricity
     carrier_out: electricity
     flow_cap_max: # kW
-    storage_cap_max: 2e6
-    flow_cap_per_storage_cap_max: 0.25
-    flow_cap_initial: 0
+    #storage_cap_max: 1e8
+    flow_cap_per_storage_cap_max: 0.9
+    #flow_cap_initial: 0
 
   battery_phs:
     name: "Pump-hydro storage"
@@ -216,7 +242,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     carrier_in: electricity
     flow_cap_initial: 10e7
     demand_growth_factor:
-      data:  [1,1.1,1.2,1.3,1.4,1.5,1.6] # % of initial reference
+      data:  1 # % of initial reference
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
     electrification_factor:
@@ -236,7 +262,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
     electrification_factor:
-      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
+      data: 0 # % of initial
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
 
@@ -248,11 +274,11 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
     carrier_in: electricity
     flow_cap_initial: 10e7
     demand_growth_factor:
-      data: [1,0.9,0.8,0.8,0.8,0.8,0.8] # % growth per year
+      data: 1 # % growth per year
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
     electrification_factor:
-      data: [0, 0.2, 0.4, 0.6, 0.8, 1, 1] # % of initial
+      data: 0 # % of initial
       index: [2023, 2025, 2030, 2035, 2040, 2045, 2050]
       dims: investsteps
 
@@ -277,7 +303,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
       index: emissions
       dims: costs
     cost_flow_cap:
-      data: 450   # EUR2010/kW, from Lombardi
+      data: 1000   # EUR2010/kW, from Lombardi
       index: monetary
       dims: costs
 
@@ -296,7 +322,7 @@ techs: # Color scheme is Tol Qual Muted + some extras LEFT AS IS
       index: monetary
       dims: costs
     cost_flow_cap:
-      data: 450   # EUR2010/kW, from Lombardi
+      data: 0   # linked to imports so 0
       index: monetary
       dims: costs
 

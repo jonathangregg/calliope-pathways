@@ -1,0 +1,17 @@
+techs,parameters,2023,2025,2030,2035,2040,2045,2050
+onshore_wind,flow_cap_new_min_rate_sum,0,55000,871400,0,0,0,0
+onshore_wind,flow_cap_new_max_rate_sum,0,55000,871400,2500000,2500000,2500000,2500000
+offshore_wind,flow_cap_new_min_rate_sum,0,0,3350000,3780000,0,0,0
+offshore_wind,flow_cap_new_max_rate_sum,0,0,3350000,5000000,5000000,5000000,5000000
+pv,flow_cap_new_min_rate_sum,0,0,1552000,0,0,0,0
+pv,flow_cap_new_max_rate_sum,0,0,10000000,10000000,10000000,10000000,10000000
+battery_li,storage_cap_new_min_rate_sum,0,0,4230000,1440000,0,0,0
+battery_li,storage_cap_new_max_rate_sum,0,0,4230000,5000000,5000000,5000000,5000000
+battery_phs,flow_cap_new_min_rate_sum,0,0,652000,0,0,0,0
+battery_phs,flow_cap_new_max_rate_sum,0,0,652000,0,0,0,0
+battery_phs,storage_cap_new_min_rate_sum,0,0,3581400,0,0,0,0
+battery_phs,storage_cap_new_max_rate_sum,0,0,3581400,0,0,0,0
+import_electricity,flow_cap_new_max_rate_sum,0,500000,2200000,0,0,0,0
+import_electricity,flow_cap_new_min_rate_sum,0,500000,2200000,0,0,0,0
+export_electricity,flow_cap_new_min_rate_sum,0,500000,2200000,0,0,0,0
+export_electricity,flow_cap_new_max_rate_sum,0,500000,2200000,0,0,0,0

@@ -1,86 +1,238 @@
 scenarios: #enable upper/lower sensitivity analysis to vary results
-  scenario_I-I_default_lw:
-    low_offshore_wind_deployment:
-  scenario_I-II_default_mw:
-    medium_offshore_wind_deployment:
-  scenario_I-III_default_hw:
-    high_offshore_wind_deployment:
-
-  scenario_II-I_gov_targets_lw:
-  scenario_II-II_gov_targets_mw:
-  scenario_II-III_gov_targets_hw: #estimated beyong 2030
+  scenario_I_planned_development:
+    planned_development:
+    transport_dec_demand:
+    gov_electrification_rate:
+    expected_demand_growth:
     gov_emission_targets:
-  
-  scenario_III-I_carbon_budget_lw: 
+
+  scenario_II-I_default_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+  scenario_II-II_default_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+  scenario_II-III_default_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+
+  scenario_III-I_carbon_budget_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    carbon_budget_enable:
   scenario_III-II_carbon_budget_mw: 
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    carbon_budget_enable:
   scenario_III-III_carbon_budget_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    carbon_budget_enable:
 
-
-  scenario_IV-I_enhanced_bio_lw: 
-  scenario_IV-II_enhanced_bio_mw: 
+  scenario_IV-I_enhanced_bio_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    ES_bioenergy:
+  scenario_IV-II_enhanced_bio_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    ES_bioenergy:
   scenario_IV-III_enhanced_bio_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    ES_bioenergy:
 
-  scenario_V-I_novel_techs_lw: 
-  scenario_V-II_novel_techs_mw: 
-  scenario_V-III_novel_techs_hw:
-
-  scenario_VI-I_inc_pv_lw: 
-  scenario_VI-II_inc_pv_mw: 
-  scenario_VI-III_inc_pv_hw:
-
-
-  scenario_VII-I_inc_dem_lw: 
-  scenario_VII-II_inc_dem_mw: 
-  scenario_VII-III_inc_dem_hw:
-
-  scenario_IIX-I_dec_onwind_lw: 
-  scenario_IIX-II_dec_onwind_mw: 
-  scenario_IIX-III_dec_onwind_hw:
-
-  scenario_IX-I_no_more_storage_lw: 
-  scenario_IX-II_no_more_storage_mw: 
-  scenario_IX-III_no_more_storage_hw:
-
-
-  sensitivity_I:
-
-
-  scenario_II-I_: 
-    no_emission_targets:
-  scenario_IV_no_new_wind:
-  scenario_IV_low_wind:
-  scenario_VI_high_wind:
-  scenario_VII_novel_techs: #enable tidal and nuclear
+  scenario_V-I_novel_techs_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
     enable_novel_techs:
-  scenario_IIX_CAPEX_emissions: #Enable CAPEX emissions
+  scenario_V-II_novel_techs_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    enable_novel_techs:
+  scenario_V-III_novel_techs_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    enable_novel_techs:
+
+  scenario_VI-I_inc_demand_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    increased_demand_growth:
+  scenario_VI-II_inc_demand_mw: 
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    increased_demand_growth:
+  scenario_VI-III_inc_demand_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    increased_demand_growth:
+
+  scenario_VII-I_no_more_storage_lw: 
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    disable_new_storage:
+  scenario_VII-II_no_more_storage_mw: 
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    disable_new_storage:
+  scenario_VII-III_no_more_storage_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    gov_emission_targets:
+    disable_new_storage:
+
+  sensitivity_I-I_CAPEX_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
     enable_CAPEX_emissions:
-  scenario_IX_worst_case: #Enable CAPEX emissions
+  sensitivity_I-II_CAPEX_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    enable_CAPEX_emissions:
+  sensitivity_I-III_CAPEX_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    expected_demand_growth:
+    enable_CAPEX_emissions:
 
+  sensitivity_II-I_offshore_wind_adv_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    pro_offshore_bias_costs:
+  sensitivity_II-II_offshore_wind_adv_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    pro_offshore_bias_costs:
+  sensitivity_II-III_offshore_wind_adv_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    pro_offshore_bias_costs:
 
+  sensitivity_III-I_offshore_wind_disadv_lw:
+    low_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    anti_offshore_bias_costs:
+  sensitivity_III-II_offshore_wind_disadv_mw:
+    medium_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    anti_offshore_bias_costs:
+  sensitivity_III-III_offshore_wind_disadv_hw:
+    high_offshore_wind_deployment:
+    gov_electrification_rate:
+    gov_emission_targets:
+    expected_demand_growth:
+    anti_offshore_bias_costs:
+
+  spores:
+    spores_setup:
 
 overrides:
   low_offshore_wind_deployment:
-    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+    techs.offshore_wind.flow_cap_new_max_rate_sum.data: [0,0,1000000,1000000,1000000,1000000,1000000]
   medium_offshore_wind_deployment:
-    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+    techs.offshore_wind.flow_cap_new_max_rate_sum.data: [0,0,2500000,2500000,2500000,2500000,2500000]
   high_offshore_wind_deployment:
-    offshore_wind.flow_cap_new_max_rate_sum: [0,0,0,0,0,0,0]
+    techs.offshore_wind.flow_cap_new_max_rate_sum.data: [0,0,5000000,5000000,5000000,5000000,5000000]
 
-  no_emission_targets:
-    parameters:
-      emissions_max_ratio.data: [1, 1, 1, 1, 1, 1, 1]
+  gov_electrification_rate:
+    techs:
+      demand_electrified_transport.electrification_factor.data: [0, 0.125, 0.5, 0.65, 0.8, 0.95, 1]
+      demand_electrified_heat.electrification_factor.data: [0, 0.07, 0.29, 0.5, 0.71, 0.91, 1]
+  expected_demand_growth:
+    techs.demand_electricity.demand_growth_factor.data: [1,1.08,1.16,1.24,1.32,1.4,1.48]
+  increased_demand_growth:
+    techs:
+      demand_electricity.demand_growth_factor.data: [1,1.12,1.24,1.36,1.48,1.6,1.72]
+      demand_electrified_heat.demand_growth_factor.data: [1,1,1,1.05,1.1,1.15,1.2]
+      demand_electrified_transport.demand_growth_factor.data: [1,1,1,1.05,1.1,1.15,1.2]
   gov_emission_targets:
-    parameters:
-      emissions_max_ratio.data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0]
+    parameters.emissions_initial.data: 10.6e9
+    parameters.emissions_max_ratio.data: [0.94, 0.75, 0.49, 0.375, 0.25, 0.125, 0]
+  transport_dec_demand:
+    techs.demand_electrified_transport.demand_growth_factor.data: [1,0.9,0.8,0.8,0.8,0.8,0.8]
+  carbon_budget_enable:
+    techs:
+      oil.flow_cap_new_max_rate_sum.data: [0,1000000,1000000,1000000,1000000,1000000,1000000]
+      coal.flow_cap_new_max_rate_sum.data: [0,1000000,1000000,1000000,1000000,1000000,1000000]
+      ccgt.flow_cap_new_max_rate_sum.data: [0,1000000,1000000,1000000,1000000,1000000,1000000]
+    config.build.carbon_budget: True
+
+  planned_development:
+    #all proposed plants
+    data_sources.planned_deploy_rate_params:
+      source: data_sources/scenario_series/planned_deploy_rate_techs.csv
+      rows: [techs, parameters]
+      columns: vintagesteps
+  ES_bioenergy:
+    techs:
+      waste.cost_flow_in.data: -0.02717
+      bioenergy_lc.cost_flow_in.data: 0.01392
+      bioenergy.cost_flow_in.data: 0.03462
+      bioenergy_hc.cost_flow_in.data: 0.08918
+    data_sources.maximum_flow_rate_params:
+      source: data_sources/scenario_series/ES_max_flow_techs.csv
+      rows: [techs, parameters]
+      columns: investsteps
   enable_novel_techs:
     techs:
-      nuclear.flow_cap_new_max_rate_sum: [0,0,0,300000,300000,600000,600000]
-      tidal.flow_cap_new_max_rate_sum: [0,0,5,10,50,100,100]
-
+      nuclear.flow_cap_new_max_rate_sum.data: [0,0,0,300000,300000,600000,600000]
+      tidal.flow_cap_new_max_rate_sum.data: [0,0,5000,25000,50000,100000,100000]
+  disable_new_storage:
+    data_sources.no_more_storage_params:
+      source: data_sources/scenario_series/no_new_storage_techs_kw.csv
+      rows: [nodes, techs, parameters]
+      columns: [values]
+      drop: values
+  
   enable_CAPEX_emissions:
     data_sources:
       dynamic_monetary_techs_params:
-        source: data_sources/static_series/CAPEX_emissions_techs.csv
+        source: data_sources/scenario_series/CAPEX_emissions_techs.csv
         rows: [techs, parameters]
         columns: [values]
         add_dimensions:
@@ -88,8 +240,72 @@ overrides:
         drop: values
     parameters:
       emissions_max_ratio:
-        data: [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.03]
-    
-  enable_overflow:
-  upper_sensitivity_analysis:
-  lower_sensitivity_analysis:
+        data: [0.94, 0.75, 0.49, 0.375, 0.25, 0.125, 0.03]
+  
+  pro_offshore_bias_costs:
+    data_sources:
+      pro_offshore_monetary_techs_params:
+        source: data_sources/scenario_series/pro_offshore_monetary_techs.csv
+        rows: [techs, parameters]
+        columns: vintagesteps
+        add_dimensions:
+          costs: monetary
+  anti_offshore_bias_costs:
+    data_sources:
+      anti_offshore_monetary_techs_params:
+        source: data_sources/scenario_series/anti_offshore_monetary_techs.csv
+        rows: [techs, parameters]
+        columns: vintagesteps
+        add_dimensions:
+          costs: monetary
+
+  spores_setup:
+    #config.build.ensure_feasibility: false
+    parameters:
+      objective_cost_weights: # makes sure that a 'spores_score' class exists in the model and in the objective
+        data: [1, 0, 0]
+        index: ["monetary", "emissions", "spores_score"]
+      spores_objective_cost_weights:
+        data: [0, 0, 1]
+        index: ["monetary", "emissions", "spores_score"]
+        dims: costs
+      spores_slack: 0.1
+      #spores_number: 20
+      spores_tracker: # defines which techs are going to be subject to the SPORES weighting process
+        data: true
+        index: [bioenergy,offshore_wind]
+        dims: techs
+      spores_cost_max: .inf
+      spores_cost_class:
+        data: [false, false, true]
+        index: ["monetary", "emissions", "spores_score"]
+        dims: costs
+    config:
+      init.add_math: ["spores_math.yaml"]
+      #build.mode: spores
+
+    tech_groups:
+      cost_dim_setter:
+        cost_flow_cap:
+          index: [monetary, emissions, spores_score]
+          dims: costs
+        cost_interest_rate:
+          data: [0.10, 1]
+          index: [monetary, spores_score]
+          dims: costs
+      interest_rate_setter:
+        cost_interest_rate:
+          data: [0.10, 1]
+          index: ["monetary", "spores_score"]
+          dims: costs
+    techs:
+        bioenergy:
+          cost_flow_cap:
+            data: 0
+            index: spores_score
+            dims: costs
+        offshore_wind:
+          cost_flow_cap:
+            data: 0
+            index: spores_score
+            dims: costs

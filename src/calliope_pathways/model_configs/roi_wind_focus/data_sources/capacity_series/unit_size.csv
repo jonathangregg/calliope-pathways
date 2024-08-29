@@ -1,0 +1,17 @@
+techs,parameters,values
+oil,flow_cap_unit_size_min,10000
+coal,flow_cap_unit_size_min,10000
+ccgt,flow_cap_unit_size_min,10000
+waste,flow_cap_unit_size_min,10000
+bioenergy,flow_cap_unit_size_min,10000
+nuclear,flow_cap_unit_size_equals,300000
+onshore_wind,flow_cap_unit_size_min,0
+offshore_wind,flow_cap_unit_size_min,0
+pv,flow_cap_unit_size_min,0
+hydropower,flow_cap_unit_size_min,0
+tidal,flow_cap_unit_size_min,0
+battery_li,storage_cap_unit_size_min,0
+battery_phs,flow_cap_unit_size_min,100000
+battery_phs,storage_cap_unit_size_min,1000000
+import_electricity,flow_cap_unit_size_min,100000
+export_electricity,flow_cap_unit_size_min,100000

@@ -1,7 +1,6 @@
 import importlib
 
 import calliope
-import calliope_pathways
 import plotly.express as px
 
 # Set Variables
@@ -13,17 +12,81 @@ modelurl = (
 )
 
 
-scenario = "scenario_II-III_gov_targets_hw"
-#scenario = "scenario_IIX_CAPEX_emissions"
+scenario = "scenario_II-II_default_mw"
+
+fname = scenario + "_3h.nc"
+resultsurl = (
+    importlib.resources.files("calliope_pathways")
+    / "model_configs"
+    / "roi_wind_focus"
+    / "model_results_Final"
+    / fname
+)
+
 # Set up model
 calliope.set_log_verbosity("INFO", include_solver_output=False)
-model = calliope_pathways.models.load(modelurl,scenario=scenario)
+model = calliope.read_netcdf(resultsurl)
+#mone = model.results.costs.sel(costs='monetary')
+#sum = mone.count()
+#print(sum)
+#x = sum(mone.values())
 
-# Run Model
-model.build()
-model.solve()
-#print(model.results.unmet_demand())
 
+filter1 = model.results.techs != "demand_electricity" 
+filter2 = model.results.techs != "demand_electrified_transport" 
+filter3 = model.results.techs != "demand_electrified_heat"
+
+df_capacity = (
+    model.results.storage_cap.sum("nodes")
+    .to_series()
+    .where(lambda x: x != 0)
+    .dropna()
+    .to_frame("Storage capacity (kWh)")
+    .reset_index()
+)
+
+fig = px.bar(
+    df_capacity,
+    x="investsteps",
+    y="Storage capacity (kWh)",
+    color="techs",
+    color_discrete_map=model.inputs.color.to_series().to_dict(),
+    barmode='stack'
+)
+
+# Plot Figure
+
+
+fig.update_layout(
+    xaxis_title={'text': 'Investsteps', 'font': {'size': 26}},
+    yaxis_title={'text': 'Storage Capacity (kWh)', 'font': {'size': 26}},
+    xaxis={'tickfont': {'size': 18}},
+    yaxis={'tickfont': {'size': 18}},
+    legend={'font': {'size': 26}}
+)
+#fig.update_layout(margin=dict(l=0, r=0, t=20, b=20))
+fig.show()
+
+"""
+df_outflow = (
+    (model.results.flow_out.fillna(0) - model.results.flow_in.fillna(0))
+    .sel(carriers="electricity")
+    .sum(["nodes", "timesteps"], min_count=1)
+    .to_series()
+    .where(lambda x: x > 1)
+    .dropna()
+    .to_frame("Annual outflow (kWh)")
+    .reset_index()
+)
+
+fig = px.bar(
+    df_outflow,
+    x="investsteps",
+    y="Annual outflow (kWh)",
+    color="techs",
+    color_discrete_map=model.inputs.color.to_series().to_dict(),
+    barmode='stack'
+)
 filter1 = model.results.techs != "demand_electricity" 
 filter2 = model.results.techs != "demand_electrified_transport" 
 filter3 = model.results.techs != "demand_electrified_heat"
@@ -41,15 +104,16 @@ df_capacity = (
     .reset_index()
 )
 
-print(df_capacity.head())
-
 fig = px.bar(
     df_capacity,
     x="vintagesteps",
     y="New flow capacity (kW)",
     color="techs",
     color_discrete_map=model.inputs.color.to_series().to_dict(),
+    barmode='stack'
 )
+fig.update_layout(bargap=0,width=800)
+fig.update_layout(margin=dict(l=0, r=0, t=20, b=20))
 fig.show()
 
 df_capacity = (
@@ -71,7 +135,10 @@ fig = px.bar(
     y="Flow capacity (kW)",
     color="techs",
     color_discrete_map=model.inputs.color.to_series().to_dict(),
+    barmode='stack'
 )
+fig.update_layout(bargap=0.05,width=800)
+fig.update_layout(margin=dict(l=0, r=0, t=20, b=20))
 fig.show()
 
 df_capacity = (
@@ -91,46 +158,10 @@ fig = px.bar(
     y="Storage capacity (kWh)",
     color="techs",
     color_discrete_map=model.inputs.color.to_series().to_dict(),
+    barmode='stack'
 )
-fig.show()
-
-df_outflow = (
-    (model.results.flow_out.fillna(0) - model.results.flow_in.fillna(0))
-    .sel(carriers="electricity")
-    .sum(["nodes", "timesteps"], min_count=1)
-    .to_series()
-    .where(lambda x: x > 1)
-    .dropna()
-    .to_frame("Annual outflow (kWh)")
-    .reset_index()
-)
-
-
-print(df_capacity.head())
-
-filter1rev = model.results.techs == "demand_electricity" 
-filter2rev = model.results.techs == "demand_electrified_transport" 
-filter3rev = model.results.techs == "demand_electrified_heat"
-
-fig = px.bar(
-    df_outflow,
-    x="investsteps",
-    y="Annual outflow (kWh)",
-    color="techs",
-    color_discrete_map=model.inputs.color.to_series().to_dict(),
-)
-"""
-df_demand = (
-    model.results.flow_in.where(filter1rev | filter2rev | filter3rev)
-    .sel(carriers="electricity")
-    .sum(["nodes", "timesteps"])
-    .to_series()
-    .reset_index()
-)
-fig.add_scatter(
-    x=df_demand.investsteps, y=df_demand.flow_in, line={"color": "black"}, name="Demand"
-)"""
-
+fig.update_layout(bargap=0,width=800)
+fig.update_layout(margin=dict(l=0, r=0, t=20, b=20))
 fig.show()
 
 df_electricity = (
@@ -177,3 +208,4 @@ for row, year in enumerate(invest_order[::-1]):
 fig.update_yaxes(matches=None)
 fig.show()
 
+"""
